@@ -57,10 +57,13 @@ const Dashboard: React.FC = () => {
       });
 
       transacts.data.transactions.forEach((transaction: TransactionDTO) => {
+        const formattedDate = formatDate(transaction.created_at.toString());
+        const formattedValue = formatValue(transaction.value);
+        const isOutcome = transaction.type === 'outcome';
         const object: Transaction = {
           ...transaction,
-          formattedValue: formatValue(transaction.value),
-          formattedDate: formatDate(transaction.created_at.toString()),
+          formattedValue: isOutcome ? `- ${formattedValue}` : formattedValue,
+          formattedDate,
         };
 
         objectTransaction.push(object);
